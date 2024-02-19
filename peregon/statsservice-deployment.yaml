@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: statsservice-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: statsservice
+  template:
+    metadata:
+      labels:
+        app: statsservice
+    spec:
+      containers:
+      - name: statsservice
+        image: cofedish/stats1:new
+        ports:
+        - containerPort: 5003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: statsservice-service
+spec:
+  selector:
+    app: statsservice
+  ports:
+    - protocol: TCP
+      port: 5003
+      targetPort: 5003
+
